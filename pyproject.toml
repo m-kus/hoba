@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "hoba"
+version = "0.1.0"
+description = "Yet another secrets management toolkit"
+authors = ["m-kus <44951260+m-kus@users.noreply.github.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+python-gnupg = "*"
+gitpython = "*"
+loguru = "*"
+fire = "*"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+hoba = 'hoba.cli:main'
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
