@@ -20,6 +20,8 @@ $ pip install git+https://github.com/m-kus/hoba
 
 ## Usage
 
+All hoba commands work only if there is a ```hoba.yml``` file inside the current directory. File format will be described below.
+
 ### Storing and sharing secrets
 
 Pass is a great alternative to Hashicorp Vault and other enterprise secret storages, cause it's simple, safe, and portable. In my team we came to a pretty convenient scheme without loosing in security.
@@ -29,7 +31,32 @@ Pass is a great alternative to Hashicorp Vault and other enterprise secret stora
 3. Each developer has to generate gpg key and add pubkey to the pass repo (keys are stored in .gpg-keys file);
 4. All developers have to import all keys from the repo and set maximum trust level;
 
+You can do this manually, but there is a command which does pretty much the same:
+
+```
+$ hoba update
+```
+
+Hoba can also spawn a shell with overrided `PASSWORD_STORE_DIR` environment variable:
+
+```
+$ hoba shell
+$ pass
+```
+
 ### Deploying secrets
+
+By default hoba looks for a ```default``` section inside the configuration file.
+
+```
+$ hoba export
+```
+
+You can also specify target env:
+
+```
+$ hoba export dev
+```
 
 Sample hoba configuration file:
 
@@ -40,7 +67,7 @@ password-store:
 
 dev: &default
   environment:
-    env_file: ./.env
+    env_file: ./.secrets/dev.env
     variables:
       - DB_PASSWORD=postgresql/example.com/password
   secrets:
@@ -52,8 +79,22 @@ dev: &default
 default: *default
 ```
 
-Docker-compose sample integration:
+Docker compose integration example:
 
 ```yaml
-
+version: "3.1"
+services:
+  nginx:
+    environment:
+      env_file:
+      - ./.secrets/dev.env
+    secrets:
+      - cert_key
+      - dh_params
+    
+secrets:
+  cert_key:
+    file: ./.secrets/cert_key
+  dh_params:
+    file: ./.secrets/dh_params
 ```
