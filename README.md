@@ -1,4 +1,9 @@
 # Hoba
+
+[![Build Status](https://travis-ci.org/m-kus/hoba.svg?branch=master)](https://travis-ci.org/m-kus/hoba)
+[![Made With](https://img.shields.io/badge/made%20with-python-blue.svg?)](https://www.python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Yet another secrets management toolkit based on [passwordstore](https://www.passwordstore.org/)
 
 ![hoba](http://memesmix.net/media/download.php?meme=weqlu4)
