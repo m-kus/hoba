@@ -19,14 +19,26 @@ def load_config(path='./hoba.yml'):
     return config
 
 
+def set_pass_env(pass_info: dict) -> bool:
+    if not pass_info.get('repo_dir'):
+        logger.info('Password store directory is not specified')
+        return False
+    else:
+        os.environ['PASSWORD_STORE_DIR'] = pass_info['repo_dir']
+        return True
+
+
 def spawn_shell():
-    os.environ['PS1'] = r'\[\033[48;5;54m\]\u@\h:\w\\$\e[0m \[$(tput sgr0)\]'
-    os.environ['HOBA_ACTIVE'] = '1'
+    if os.environ.get('HOBA_ACTIVE', '0') == '1':
+        logger.info('You are already in a hoba shell')
+    else:
+        os.environ['PS1'] = r'\[\033[48;5;54m\]\u@\h:\w\\$\e[0m \[$(tput sgr0)\]'
+        os.environ['HOBA_ACTIVE'] = '1'
 
-    _, shell_path = detect_shell(os.getpid())
-    subprocess.call([shell_path, '--norc', '--noprofile', '-i'])
+        _, shell_path = detect_shell(os.getpid())
+        subprocess.call([shell_path, '--norc', '--noprofile', '-i'])
 
-    os.environ.pop('HOBA_ACTIVE')
+        os.environ.pop('HOBA_ACTIVE')
 
 
 class Hoba:
@@ -46,17 +58,13 @@ class Hoba:
             logger.error(e)
 
     def shell(self):
-        config = load_config().get('password-store', {})
-        if not config.get('repo_dir'):
-            logger.info('Password store directory is not specified')
-        elif os.environ.get('HOBA_ACTIVE', '0') == '1':
-            logger.info('You are already in a hoba shell')
-        else:
-            os.environ['PASSWORD_STORE_DIR'] = config['repo_dir']
+        if set_pass_env(load_config().get('password-store', {})):
             spawn_shell()
 
     def gen(self, env=None):
+        config = load_config()
         try:
+            set_pass_env(config.get('password-store', {}))
             generate_files(load_config(), env)
         except ValueError as e:
             logger.error(e)
