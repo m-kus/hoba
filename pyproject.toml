@@ -14,6 +14,7 @@ fire = "*"
 keyring = "*"
 "keyrings.alt" = "*"
 pyaml = "*"
+shellingham = "*"
 
 [tool.poetry.dev-dependencies]
 
