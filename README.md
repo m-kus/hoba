@@ -34,7 +34,7 @@ Pass is a great alternative to Hashicorp Vault and other enterprise secret stora
 You can do this manually, but there is a command which does pretty much the same:
 
 ```
-$ hoba update
+$ hoba sync
 ```
 
 Hoba can also spawn a shell with overrided `PASSWORD_STORE_DIR` environment variable:
@@ -49,34 +49,47 @@ $ pass
 By default hoba looks for a ```default``` section inside the configuration file.
 
 ```
-$ hoba export
+$ hoba gen
 ```
 
 You can also specify target env:
 
 ```
-$ hoba export dev
+$ hoba gen dev
 ```
 
 Sample hoba configuration file:
 
 ```yaml
 password-store:
-  repository: http://github.com/example.git
-  directory: ./.password-store
-
-dev: &default
-  environment:
-    env_file: ./.secrets/dev.env
+  repo_url: http://github.com/example.git
+  repo_dir: ./.password-store
+  
+environments:
+  dev:
+    default:
+  prod:
+  
+targets:
+  - type: env_file
+    output: ./.secrets/{ENV}.env
     variables:
-      - DB_PASSWORD=postgresql/example.com/password
-  secrets:
-    directory: ./.secrets
-    files:
-      - cert_key=ssl/example.com/cert_key
-      - dh_param=ssl/example.com/dh_params
+      - DB_PASSWORD={ENV}/postgresql/password
+    except:
+      - dev
 
-default: *default
+  - type: dir
+    output: ./.secrets
+    files:
+      - ssl/example.com/cert_key:ssl/cert_key
+      - ssl/example.com/dh_params:ssl/dh_params
+    only:
+      - prod
+
+  - type: keyring
+    output: ./.secrets/keyring_pass.cfg
+    entries:
+      - app@telegram:{ENV}/telegram/bot_api_key
 ```
 
 Docker compose integration example:
@@ -91,10 +104,14 @@ services:
     secrets:
       - cert_key
       - dh_params
+      - source: keyring
+        target: /root/.local/share/python_keyring/keyring_pass.cfg
     
 secrets:
   cert_key:
-    file: ./.secrets/cert_key
+    file: ./.secrets/ssl/cert_key
   dh_params:
-    file: ./.secrets/dh_params
+    file: ./.secrets/ssl/dh_params
+  keyring:
+    file: ./.secrets/keyring_pass.cfg
 ```

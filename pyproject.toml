@@ -11,6 +11,8 @@ python-gnupg = "*"
 gitpython = "*"
 loguru = "*"
 fire = "*"
+keyring = "*"
+"keyrings.alt" = "*"
 
 [tool.poetry.dev-dependencies]
 
