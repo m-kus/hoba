@@ -154,6 +154,17 @@ colorama = ">=0.3.4"
 
 [[package]]
 category = "main"
+description = "PyYAML-based module to produce pretty and readable YAML-serialized data"
+name = "pyaml"
+optional = false
+python-versions = "*"
+version = "18.11.0"
+
+[package.dependencies]
+PyYAML = "*"
+
+[[package]]
+category = "main"
 description = "C parser in Python"
 marker = "sys_platform == \"linux\""
 name = "pycparser"
@@ -188,6 +199,14 @@ version = "0.2.0"
 
 [[package]]
 category = "main"
+description = "YAML parser and emitter for Python"
+name = "pyyaml"
+optional = false
+python-versions = "*"
+version = "5.1"
+
+[[package]]
+category = "main"
 description = "Python bindings to FreeDesktop.org Secret Service API"
 marker = "sys_platform == \"linux\""
 name = "secretstorage"
@@ -216,7 +235,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.0.5"
 
 [metadata]
-content-hash = "9eb7e77f366715c9ea067be1b295590404ec27f8618c4d059636363a11004f8d"
+content-hash = "0e87c96b427091b0472c7c8b74a8816b65d5277fde7108e8a2f5fbbb9147e31e"
 python-versions = "^3.6"
 
 [metadata.hashes]
@@ -234,10 +253,12 @@ jeepney = ["6089412a5de162c04747f0220f6b2223b8ba660acd041e52a76426ca550e3c70", "
 keyring = ["44e5a4e1ad1070c7cd46959a0d6c2a99588b66a6dad6fd685463b486c04855ea", "aae82841a2e170ecf4319df0f5c0df1468a98809e77563174949d8394bb59488"]
 "keyrings.alt" = ["0bc7b75c7e710a3dd7bc4c3841c71467b24ccbce1b85efb2586bdf0c4713f751", "5fe5631e333c6134615689285ef92a0db96fb6eab6cd350c08b7b661d708bd1b"]
 loguru = ["68297d9f23064c2f4764bb5d0c5c767f3ed7f9fc1218244841878f5fc7c94add", "ebac59630946721fd6207264679b267a8bdc290b086226067d6aad86830e3123"]
+pyaml = ["39470e99cfb7a0ef79e593fee626328283cd6d1a9c23c7e30f0d3a6933f3a235", "b96292cc409e0f222b6fecff96afd2e19cfab5d1f2606344907751d42301263a"]
 pycparser = ["a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"]
 pygments = ["5ffada19f6203563680669ee7f53b64dabbeb100eb51b61996085e99c03b284a", "e8218dd399a61674745138520d0d4cf2621d7e032439341bc3f647bff125818d"]
 python-gnupg = ["45daf020b370bda13a1429c859fcdff0b766c0576844211446f9266cae97fb0e", "85c231850a0275c9722f06e34b45a22510b83a6a6e88f93b5ae32ba04c95056c"]
 pywin32-ctypes = ["24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942", "9dc2d991b3479cc2df15930958b674a48a227d5361d413827a4cfd0b5876fc98"]
+pyyaml = ["1adecc22f88d38052fb787d959f003811ca858b799590a5eaa70e63dca50308c", "436bc774ecf7c103814098159fbb84c2715d25980175292c648f2da143909f95", "460a5a4248763f6f37ea225d19d5c205677d8d525f6a83357ca622ed541830c2", "5a22a9c84653debfbf198d02fe592c176ea548cccce47553f35f466e15cf2fd4", "7a5d3f26b89d688db27822343dfa25c599627bc92093e788956372285c6298ad", "9372b04a02080752d9e6f990179a4ab840227c6e2ce15b95e1278456664cf2ba", "a5dcbebee834eaddf3fa7366316b880ff4062e4bcc9787b78c7fbb4a26ff2dd1", "aee5bab92a176e7cd034e57f46e9df9a9862a71f8f37cad167c6fc74c65f5b4e", "c51f642898c0bacd335fc119da60baae0824f2cde95b0330b56c0553439f0673", "c68ea4d3ba1705da1e0d85da6684ac657912679a649e8868bd850d2c299cce13", "e23d0cc5299223dcc37885dae624f382297717e459ea24053709675a976a3e19"]
 secretstorage = ["20c797ae48a4419f66f8d28fc221623f11fc45b6828f96bdb1ad9990acb59f92", "7a119fb52a88e398dbb22a4b3eb39b779bfbace7e4153b7bc6e5954d86282a8a"]
 six = ["3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c", "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"]
 smmap2 = ["0555a7bf4df71d1ef4218e4807bbf9b201f910174e6e08af2e138d4e517b4dde", "29a9ffa0497e7f2be94ca0ed1ca1aa3cd4cf25a1f6b4f5f87f74b46ed91d609a"]
