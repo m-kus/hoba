@@ -1,0 +1,29 @@
+password-store:
+  repo_url: http://github.com/example.git
+  repo_dir: ./.password-store
+
+environments:
+  dev:
+    default:
+  prod:
+
+targets:
+  - type: env_file
+    output: ./.secrets/{ENV}.env
+    variables:
+      - DB_PASSWORD={ENV}/postgresql/password
+    except:
+      - dev
+
+  - type: dir
+    output: ./.secrets
+    files:
+      - ssl/example.com/cert_key:cert_key
+      - ssl/example.com/dh_params:dh_params
+    only:
+      - prod
+
+  - type: keyring
+    output: ./.secrets/keyring_pass.cfg
+    entries:
+      - app@telegram:{ENV}/telegram/bot_api_key

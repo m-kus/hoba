@@ -9,15 +9,13 @@ from hoba.sync import sync_password_store, sync_gpg_keys
 from hoba.gen import generate_files
 
 
-def load_config(filename='hoba.yml'):
-    config_path = os.path.join(os.getcwd(), filename)
-    if not os.path.exists(config_path):
+def load_config(path='./hoba.yml'):
+    if not os.path.exists(path):
         logger.warning('Config file not found in current folder, continue with reduced functional')
         config = dict()
     else:
-        with open(config_path) as f:
+        with open(path) as f:
             config = yaml.load(f.read())
-
     return config
 
 
@@ -38,11 +36,14 @@ class Hoba:
 
     def sync(self):
         config = load_config().get('password-store', {})
-        repo = sync_password_store(
-            repo_url=config.get('repo_url'),
-            repo_dir=config.get('repo_dir', '~/.password-store')
-        )
-        sync_gpg_keys(repo)
+        try:
+            repo = sync_password_store(
+                repo_url=config.get('repo_url'),
+                repo_dir=config.get('repo_dir', '~/.password-store')
+            )
+            sync_gpg_keys(repo)
+        except ValueError as e:
+            logger.error(e)
 
     def shell(self):
         config = load_config().get('password-store', {})
@@ -55,7 +56,10 @@ class Hoba:
             spawn_shell()
 
     def gen(self, env=None):
-        generate_files(load_config(), env)
+        try:
+            generate_files(load_config(), env)
+        except ValueError as e:
+            logger.error(e)
 
 
 def main():
