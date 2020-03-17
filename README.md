@@ -19,6 +19,11 @@ Yet another secrets management toolkit based on [passwordstore](https://www.pass
 * python 3.6+
 * pip 19.0.1+
 
+#### Ubuntu
+```
+$ sudo apt install gnupg2 pass
+```
+
 ## Installation
 
 ```
