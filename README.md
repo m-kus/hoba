@@ -22,7 +22,7 @@ Yet another secrets management toolkit based on [passwordstore](https://www.pass
 ## Installation
 
 ```
-$ pip install git+https://github.com/m-kus/hoba
+$ pip install hoba
 ```
 
 ## Usage
